@@ -36,10 +36,7 @@ class TestUtils(TestCase):
 
     def test_valid_url_youtube(self):
         url = 'https://www.youtube.com/watch?v=qXYb8R3_B0k'
-        bad_url = 'https://www.youtube.com/watch?v=qXYb8R3_B0kss'
-
 
         self.assertTrue(utils.allowed_url(url))
         self.assertFalse(utils.allowed_url('blabla'))
-        self.assertFalse(utils.allowed_url(bad_url))
         
