@@ -86,10 +86,7 @@ def process_youtube_url(url):
 
     Returns
     -------
-    str
-        The directory where the file must be saved.
-    str
-        New filename based in md5 file hash.
+        A tuple having the directory of the file and the file name.
     """    
 
     buf = io.BytesIO()

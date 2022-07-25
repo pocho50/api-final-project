@@ -49,7 +49,8 @@ class ScenesProcess:
         scene_manager.detect_scenes(frame_source=video_manager)
 
         # Each returned scene is a tuple of the (start, end) timecode.
-        self.scenes =  scene_manager.get_scene_list(base_timecode) 
+        self.scenes =  scene_manager.get_scene_list(base_timecode, start_in_scene=True) 
+
         self.__generate_thumbails_scenes()
 
         list_scenes = []
@@ -72,10 +73,14 @@ class ScenesProcess:
         directory_movie = os.path.basename(os.path.dirname(self.video_path))
         num_frames_scene = {}
         for num_scene, scene in enumerate(self.scenes):
+
+            from_frame = scene[0].get_frames()
+            to_frame = scene[1].get_frames() - 1
+
             # choose the equidistant number of frames 
-            frames_to_choose = np.linspace(scene[0].get_frames(), 
-                                            scene[1].get_frames() - 1, 
-                                            self.frames_by_scene,dtype=int)
+            frames_to_choose = np.linspace(from_frame, 
+                                           to_frame, 
+                                           self.frames_by_scene,dtype=int)
 
             # we create dictionary with key with frames number and
             # value with scene number
@@ -86,22 +91,18 @@ class ScenesProcess:
 
         # create directory scene and images for each scene
         for scene, frames in scene_frame.items():
+            # for scenes with less than self.frames_by_scene
+            if len(frames) < self.frames_by_scene:
+                len_frames = len(frames)
+                for i in range(len_frames,  self.frames_by_scene):
+                    frames[i] = frames[-1]
+
             os.makedirs(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene)), exist_ok = True)
             for i, frame in enumerate(frames):
                 image = str(i) + '.jpg'
                 if not os.path.exists(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene), image)):
                     cv2.imwrite(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene), image), frame)
             
-            #for scenes without 8 frames
-            if len(frames) < self.frames_by_scene:
-                for i in range(self.frames_by_scene):
-                    frame=frames[-1]
-                    image = str(i) + '.jpg'
-                    cv2.imwrite(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene), image), frame)
-                    if len (os.listdir(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene)))) >= self.frames_by_scene:
-                        break
-
-
 
     def __get_frames(self, num_frames_scene):
         """
