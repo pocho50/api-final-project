@@ -20,5 +20,8 @@ SERVER_SLEEP = 0.05
 
 SHAPE = (224,224)
 MODEL_CLASSES_MOVEMENT = ['Motion', 'Pull', 'Push', 'Static']
+MODEL_CLASSES_SCALE = ['CS', 'ECS', 'FS', 'LS', 'MS']
 PATH_MODEL_MOVEMENT = './weight/model.05-0.9174.h5'
+PATH_MODEL_SCALE = './weight/model.04-0.5498.h5'
+PATH_MODEL = './weight/model.06-1.5956.h5'
 FRAMES = 8

@@ -17,6 +17,7 @@ class TestUtils(TestCase):
         self.assertFalse(utils.allowed_file("/usr/var/src/car.gif"))
 
         self.assertTrue(utils.allowed_file("cat.mp4"))
+        self.assertTrue(utils.allowed_file("cat.Mp4"))
         self.assertTrue(utils.allowed_file("cat.ogg"))
         self.assertTrue(utils.allowed_file("cat.webm"))
 

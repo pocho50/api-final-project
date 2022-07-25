@@ -91,6 +91,17 @@ class ScenesProcess:
                 image = str(i) + '.jpg'
                 if not os.path.exists(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene), image)):
                     cv2.imwrite(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene), image), frame)
+            
+            #for scenes without 8 frames
+            if len(frames) < self.frames_by_scene:
+                for i in range(self.frames_by_scene):
+                    frame=frames[-1]
+                    image = str(i) + '.jpg'
+                    cv2.imwrite(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene), image), frame)
+                    if len (os.listdir(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene)))) >= self.frames_by_scene:
+                        break
+
+
 
     def __get_frames(self, num_frames_scene):
         """

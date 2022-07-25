@@ -62,10 +62,7 @@ def directory_file_hash(file):
 
     Returns
     -------
-    str
-        The directory where the file must be saved.
-    str
-        New filename based in md5 file hash.
+        A tuple having the directory of the file and the file name.
     """
 
     split_file = os.path.splitext(file.filename)
@@ -135,7 +132,7 @@ def get_prediction(video_name):
 
     assert os.path.exists(
         os.path.join(video_path)
-    ), f"The file doesn't exists"
+    ), "The file doesn't exists"
 
     # we call model_predict from middleware to predict each scene
     info_scenes = model_predict(video_name)
