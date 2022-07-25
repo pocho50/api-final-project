@@ -3,7 +3,7 @@
 venv
 api/__pycache__
 api/node_modules
-uploads
+uploads/*
 
 
 # Byte-compiled / optimized / DLL files
