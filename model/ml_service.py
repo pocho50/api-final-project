@@ -46,7 +46,6 @@ def predict(directory_video, num_scene):
 
         frame =  cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         frame = cv2.resize(frame, settings.SHAPE)
-        #preprocess_input = keras.applications.resnet50.preprocess_input
         frame=keras.applications.resnet50.preprocess_input(frame)
         frames.append(frame)
 
@@ -62,21 +61,6 @@ def predict(directory_video, num_scene):
     index_max_scale=prediction[1].argmax()
     class_scale=settings.MODEL_CLASSES_SCALE[index_max_scale]
 
-
-    return class_scale, class_movement
-    model_movement = keras.models.load_model(settings.PATH_MODEL_MOVEMENT)
-    # Get predictions
-    prediction_movement = model_movement.predict(np.array(frames))
-    #score_max_movement=prediction_movement.max()
-    index_max_movement=prediction_movement.argmax()
-    class_movement=settings.MODEL_CLASSES_MOVEMENT[index_max_movement]
-
-    model_scale= keras.models.load_model(settings.PATH_MODEL_SCALE)
-    # Get predictions
-    prediction_scale = model_scale.predict(np.array(frames))
-    #score_max_movement=prediction_movement.max()
-    index_max_scale=prediction_scale.argmax()
-    class_scale=settings.MODEL_CLASSES_SCALE[index_max_scale]
 
     return class_scale, class_movement
 
@@ -128,8 +112,8 @@ def classify_process():
             # prectic scale and movement
             scale, movement = predict(directory_video, num_scene)
             info_scene  = {
-                'from': scene['to'],
-                'to': scene['from'],
+                'from': scene['from'],
+                'to': scene['to'],
                 'dir': os.path.join(directory_video, str(num_scene)),
                 'scale': scale,
                 'movement': movement
