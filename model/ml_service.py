@@ -51,6 +51,19 @@ def predict(directory_video, num_scene):
         frames.append(frame)
 
     frames = np.expand_dims(frames, axis=0)
+
+    model = keras.models.load_model(settings.PATH_MODEL)
+
+    prediction = model.predict(np.array(frames))
+
+    index_max_movement=prediction[0].argmax()
+    class_movement=settings.MODEL_CLASSES_MOVEMENT[index_max_movement]
+
+    index_max_scale=prediction[1].argmax()
+    class_scale=settings.MODEL_CLASSES_SCALE[index_max_scale]
+
+
+    return class_scale, class_movement
     model_movement = keras.models.load_model(settings.PATH_MODEL_MOVEMENT)
     # Get predictions
     prediction_movement = model_movement.predict(np.array(frames))
@@ -58,7 +71,14 @@ def predict(directory_video, num_scene):
     index_max_movement=prediction_movement.argmax()
     class_movement=settings.MODEL_CLASSES_MOVEMENT[index_max_movement]
 
-    return 'CS', class_movement
+    model_scale= keras.models.load_model(settings.PATH_MODEL_SCALE)
+    # Get predictions
+    prediction_scale = model_scale.predict(np.array(frames))
+    #score_max_movement=prediction_movement.max()
+    index_max_scale=prediction_scale.argmax()
+    class_scale=settings.MODEL_CLASSES_SCALE[index_max_scale]
+
+    return class_scale, class_movement
 
 
 def classify_process():

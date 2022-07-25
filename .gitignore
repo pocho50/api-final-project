@@ -4,6 +4,7 @@ venv
 api/__pycache__
 api/node_modules
 uploads/*
+model/weight/
 
 
 # Byte-compiled / optimized / DLL files
