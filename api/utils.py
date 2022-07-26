@@ -3,6 +3,7 @@ import hashlib
 import settings
 from middleware import model_predict
 from pytube import YouTube 
+import json
 
 def allowed_file(filename):
     """
@@ -135,4 +136,31 @@ def get_prediction(video_name):
     info_scenes = model_predict(video_name)
 
     return info_scenes
+
+def download_json(file):
+    filename= 'data.json'
+    path=os.path.join(settings.UPLOAD_FOLDER,file['dir'],filename)
+    with open(path, 'w') as fp:
+        json.dump(file, fp)
+
+def check_json(directory,video_name):
+
+    path=os.path.join(settings.UPLOAD_FOLDER,directory,'data.json')
+    
+    if not os.path.exists(path):
+        scenes_predictions = get_prediction(video_name)
+        rpse = {"success": True, 
+            "scenes": scenes_predictions, 
+            "file_name": video_name,
+            "dir": directory}
+
+        download_json(rpse)
+        
+    else:
+        with open(path,'rb') as f:
+            json_file=f.read()
+            rpse = json.loads(json_file)
+            
+    return rpse
+
 
