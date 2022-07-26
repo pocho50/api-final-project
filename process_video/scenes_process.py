@@ -51,7 +51,10 @@ class ScenesProcess:
         # Each returned scene is a tuple of the (start, end) timecode.
         self.scenes =  scene_manager.get_scene_list(base_timecode, start_in_scene=True) 
 
-        self.__generate_thumbails_scenes()
+        directory_path = os.path.dirname(self.video_path)
+        scene_path=os.path.join(directory_path,'0')
+        if not os.path.exists(scene_path):
+            self.__generate_thumbails_scenes()
 
         list_scenes = []
 

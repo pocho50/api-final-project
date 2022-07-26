@@ -1,6 +1,7 @@
 import utils
 import settings
 import os
+import json
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for, jsonify
 
@@ -78,12 +79,7 @@ def predict_youtube():
         }), 400
 
     # get scene prediction
-    scenes_predictions = utils.get_prediction(video_name)
-
-    rpse = {"success": True, 
-            "scenes": scenes_predictions, 
-            "file_name": video_name,
-            "dir": directory}
+    rpse=utils.check_json(directory,video_name)
 
     return jsonify(rpse)
 
@@ -159,11 +155,8 @@ def predict():
         file.save(os.path.join(settings.UPLOAD_FOLDER, directory, video_name))
 
     # get scene prediction
-    scenes_predictions = utils.get_prediction(video_name)
 
-    rpse = {"success": True, 
-            "scenes": scenes_predictions, 
-            "file_name": video_name,
-            "dir": directory}
-
+    rpse=utils.check_json(directory,video_name)
+    
+    
     return jsonify(rpse)     
