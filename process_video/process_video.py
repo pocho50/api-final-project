@@ -17,6 +17,7 @@ def process_video():
         
         _, job_data_json = db.brpop(settings.REDIS_VIDEO_QUEUE)
 
+        print('The video is ready to be process by video scene',flush=True)
         job_data = json.loads(job_data_json)
 
         video_path = job_data['video_path']

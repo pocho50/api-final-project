@@ -151,6 +151,8 @@ def download_json(file):
 
 def check_json(directory, video_name, no_cache):
 
+    print('The video was recived correctly in the API',flush=True)
+    
     path=os.path.join(settings.UPLOAD_FOLDER,directory,'data.json')
     
     if not os.path.exists(path) or no_cache == 'true':

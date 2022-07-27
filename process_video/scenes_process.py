@@ -70,7 +70,7 @@ class ScenesProcess:
 
         ft= time()
 
-        print(f'process video took {ft-st} seconds',flush=True)
+        print(f'video scene split took {ft-st} seconds',flush=True)
         return list_scenes
 
     def __generate_thumbails_scenes(self):

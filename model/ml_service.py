@@ -97,6 +97,8 @@ def classify_process():
 
         _, job_data_json = db.brpop(settings.REDIS_QUEUE)
 
+        print('The video was received correctly by the model',flush=True)
+
         job_data = json.loads(job_data_json)
 
         video_name = job_data['video_name']

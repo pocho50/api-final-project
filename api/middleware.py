@@ -48,7 +48,7 @@ def model_predict(video_name):
     # Send the job to the model service using Redis
 
     db.rpush(settings.REDIS_QUEUE, json.dumps(job_data))
-
+    print('The video was sent to the model by redis',flush=True)
     # Loop until we received the response from our ML model
     while True:
         # Attempt to get model  using job_id
