@@ -81,7 +81,8 @@ def predict_youtube():
         }), 400
 
     # get scene prediction
-    rpse=utils.check_json(directory,video_name)
+    no_cache = request.form.get('no_cache', False)
+    rpse=utils.check_json(directory, video_name, no_cache)
 
     ft=time.time()
     print(f'all prediction took {ft-st} seconds',flush=True)
@@ -160,8 +161,8 @@ def predict():
         file.save(os.path.join(settings.UPLOAD_FOLDER, directory, video_name))
 
     # get scene prediction
-
-    rpse=utils.check_json(directory,video_name)
+    no_cache = request.form.get('no_cache', False)
+    rpse=utils.check_json(directory, video_name, no_cache)
     
     ft=time.time()
     print(f'all prediction took {ft-st} seconds',flush=True)

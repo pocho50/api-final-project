@@ -12,7 +12,8 @@
         loading: false,
         errors: false,
         hashFile: false,
-        videoExt: 'mp4'
+        videoExt: 'mp4',
+        delete_cache: false
       }
     },
 
@@ -26,7 +27,8 @@
           this.$refs.inputFile.value=null
           this.errors = false,
           this.hashFile = false,
-          this.url = null
+          this.url = null,
+          this.delete_cache = false
 
         },
 
@@ -39,7 +41,6 @@
           const files = e.dataTransfer.files
           this.setFile(files)
         },
-
 
         setFile(files){
           if(files && files.length > 0){
@@ -55,6 +56,7 @@
           this.url = null
           let data = new FormData()
           data.append('file', this.file)
+          data.append('no_cache', this.delete_cache)
           this.loading = true
           const response = await fetch('/predict', {
             method: 'POST',
@@ -74,6 +76,7 @@
           this.scenes = null
           let data = new FormData()
           data.append('url', this.url) 
+          data.append('no_cache', this.delete_cache)
           this.loading = true
           const response = await fetch('/predict_youtube', {
             method: 'POST',
@@ -97,6 +100,7 @@
             this.errors = false
             this.url = null
             this.fileName = null
+            this.$refs.inputFile.value=null
             return true
 
           } else {

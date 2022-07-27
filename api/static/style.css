@@ -556,6 +556,47 @@ Ensure the default browser behavior of the `hidden` attribute.
   --bs-body-bg: #fff;
 }
 
+.form-check-input:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.form-check-input:checked[type=checkbox] {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+.form-check-input:checked[type=radio] {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
+}
+
+.form-check-input[type=checkbox]:indeterminate {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
+}
+
+.form-check-input:disabled {
+  pointer-events: none;
+  filter: none;
+  opacity: 0.5;
+}
+
+.form-switch .form-check-input {
+  margin-top: 0.1rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+  background-position: left center;
+  transition: background-position 0.15s ease-in-out;
+}
+
+.form-switch .form-check-input:focus {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+
+.form-switch .form-check-input:checked {
+  background-position: right center;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
+}
+
 .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n+3) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -564,6 +605,42 @@ Ensure the default browser behavior of the `hidden` attribute.
 .input-group.has-validation > .dropdown-toggle:nth-last-child(n+4) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.was-validated .form-check-input:valid {
+  border-color: #198754;
+}
+
+.form-check-input.is-valid {
+  border-color: #198754;
+}
+
+.was-validated .form-check-input:valid:checked {
+  background-color: #198754;
+}
+
+.form-check-input.is-valid:checked {
+  background-color: #198754;
+}
+
+.was-validated .form-check-input:valid:focus {
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.form-check-input.is-valid:focus {
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+}
+
+.was-validated .form-check-input:valid ~ .form-check-label {
+  color: #198754;
+}
+
+.form-check-input.is-valid ~ .form-check-label {
+  color: #198754;
+}
+
+.form-check-inline .form-check-input ~ .valid-feedback {
+  margin-left: 0.5em;
 }
 
 .is-invalid ~ .invalid-feedback {
@@ -616,20 +693,40 @@ textarea.form-control.is-invalid {
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
 
+.was-validated .form-check-input:invalid {
+  border-color: #dc3545;
+}
+
 .form-check-input.is-invalid {
   border-color: #dc3545;
+}
+
+.was-validated .form-check-input:invalid:checked {
+  background-color: #dc3545;
 }
 
 .form-check-input.is-invalid:checked {
   background-color: #dc3545;
 }
 
+.was-validated .form-check-input:invalid:focus {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
 .form-check-input.is-invalid:focus {
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
 
+.was-validated .form-check-input:invalid ~ .form-check-label {
+  color: #dc3545;
+}
+
 .form-check-input.is-invalid ~ .form-check-label {
   color: #dc3545;
+}
+
+.form-check-inline .form-check-input ~ .invalid-feedback {
+  margin-left: 0.5em;
 }
 
 .input-group .form-control.is-invalid {
@@ -3920,8 +4017,20 @@ textarea.form-control.is-invalid {
   margin-top: 1.25rem;
 }
 
-.mb-4 {
-  margin-bottom: 1rem;
+.mr-3 {
+  margin-right: 0.75rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
 }
 
 .block {
@@ -3956,6 +4065,10 @@ textarea.form-control.is-invalid {
   height: 100%;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .w-28 {
   width: 7rem;
 }
@@ -3974,6 +4087,14 @@ textarea.form-control.is-invalid {
 
 .w-64 {
   width: 16rem;
+}
+
+.w-3 {
+  width: 0.75rem;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .flex-auto {
@@ -4018,6 +4139,10 @@ textarea.form-control.is-invalid {
   align-items: center;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -4056,12 +4181,20 @@ textarea.form-control.is-invalid {
   border-radius: 0.375rem;
 }
 
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
 .border-2 {
   border-width: 2px;
 }
 
 .border-0 {
   border-width: 0px;
+}
+
+.border {
+  border-width: 1px;
 }
 
 .border-dashed {
@@ -4103,14 +4236,17 @@ textarea.form-control.is-invalid {
   background-color: rgb(22 163 74 / var(--tw-bg-opacity));
 }
 
-.bg-slate-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(148 163 184 / var(--tw-bg-opacity));
-}
-
 .bg-slate-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
+}
+
+.bg-contain {
+  background-size: contain;
+}
+
+.bg-center {
+  background-position: center;
 }
 
 .bg-no-repeat {
@@ -4149,6 +4285,11 @@ textarea.form-control.is-invalid {
   padding-bottom: 0.5rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .pr-5 {
   padding-right: 1.25rem;
 }
@@ -4163,6 +4304,10 @@ textarea.form-control.is-invalid {
 
 .text-right {
   text-align: right;
+}
+
+.align-top {
+  vertical-align: top;
 }
 
 .font-mono {
@@ -4217,6 +4362,11 @@ textarea.form-control.is-invalid {
   color: rgb(79 70 229 / var(--tw-text-opacity));
 }
 
+.text-gray-800 {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
 .underline {
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;
@@ -4248,6 +4398,10 @@ textarea.form-control.is-invalid {
   transition-duration: 150ms;
 }
 
+.duration-200 {
+  transition-duration: 200ms;
+}
+
 .overlayed {
   position: absolute;
   top: 0px;
@@ -4256,6 +4410,16 @@ textarea.form-control.is-invalid {
   bottom: 0px;
   display: block;
   width: 100%;
+}
+
+.checked\:border-blue-600:checked {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity));
+}
+
+.checked\:bg-blue-600:checked {
+  --tw-bg-opacity: 1;
+  background-color: rgb(37 99 235 / var(--tw-bg-opacity));
 }
 
 .hover\:border-gray-400:hover {

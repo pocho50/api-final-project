@@ -149,11 +149,11 @@ def download_json(file):
     with open(path, 'w') as fp:
         json.dump(file, fp)
 
-def check_json(directory,video_name):
+def check_json(directory, video_name, no_cache):
 
     path=os.path.join(settings.UPLOAD_FOLDER,directory,'data.json')
     
-    if not os.path.exists(path):
+    if not os.path.exists(path) or no_cache == 'true':
         scenes_predictions = get_prediction(video_name)
         rpse = {"success": True, 
             "scenes": scenes_predictions, 

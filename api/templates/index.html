@@ -47,7 +47,21 @@
                                 </label>
                                 <input type="text" class="my-5 w-full p-2 rounded-md" name="url" v-model="url" placeholder="Paste the youtube link here ">
                                 <div v-if="fileName || url" class="text-right">
-                                    <button @click.prevent="fileName ? handleUpload() : handleUrlYoutube()" class="mt-4 cursor-pointer px-6 py-2 mx-auto rounded-md text-lg font-semibold text-indigo-100 bg-green-600">Submit</button>
+                                    <div>
+                                        <button @click.prevent="reset" class="mt-4 cursor-pointer px-6 py-2 mx-auto rounded-md text-lg font-semibold text-indigo-100 bg-green-600 mr-3">Reset</button>
+                                        <button @click.prevent="fileName ? handleUpload() : handleUrlYoutube()" class="mt-4 cursor-pointer px-6 py-2 mx-auto rounded-md text-lg font-semibold text-indigo-100 bg-green-600">Submit</button>
+                                    </div>
+                                    <div class="flex justify-end mt-5">
+                                        
+                                          <div class="form-check">
+                                            <input v-model="delete_cache" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="cache" type="checkbox">
+                                            <label class="form-check-label inline-block text-gray-800" for="cache">
+                                              Delete cache
+                                            </label>
+                                          </div>
+                                        
+                                      </div>
+
                                 </div>
                             </div>
 
