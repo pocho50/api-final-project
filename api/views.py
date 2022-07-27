@@ -2,6 +2,7 @@ import utils
 import settings
 import os
 import json
+import time
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for, jsonify
 
@@ -49,6 +50,7 @@ def predict_youtube():
         - "file_name" the video name 
         - "dir" the directory where the video is saved        
     """
+    st=time.time()
     # No url received
     if 'url' not in request.form:
         return jsonify({
@@ -81,6 +83,8 @@ def predict_youtube():
     # get scene prediction
     rpse=utils.check_json(directory,video_name)
 
+    ft=time.time()
+    print(f'all prediction took {ft-st} seconds',flush=True)
     return jsonify(rpse)
 
 

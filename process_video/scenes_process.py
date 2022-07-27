@@ -6,6 +6,7 @@ from scenedetect import SceneManager
 
 # For content-aware scene detection:
 from scenedetect.detectors import ContentDetector
+from time import time
 
 class ScenesProcess:
     """
@@ -32,6 +33,7 @@ class ScenesProcess:
                 from: str
             }
         """
+        st=time()
         # Create our video & scene managers, then add the detector.
         video_manager = VideoManager([self.video_path])
         scene_manager = SceneManager()
@@ -66,6 +68,9 @@ class ScenesProcess:
             
             list_scenes.append(info_scene)
 
+        ft= time()
+
+        print(f'process video took {ft-st} seconds',flush=True)
         return list_scenes
 
     def __generate_thumbails_scenes(self):

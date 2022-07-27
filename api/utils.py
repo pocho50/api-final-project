@@ -4,6 +4,7 @@ import settings
 from middleware import model_predict
 from pytube import YouTube 
 import json
+import time
 
 def allowed_file(filename):
     """
@@ -88,7 +89,8 @@ def process_youtube_url(url):
     Returns
     -------
         A tuple having the directory of the file and the file name.
-    """    
+    """  
+    st=time.time()  
 
     buf = io.BytesIO()
     
@@ -117,6 +119,10 @@ def process_youtube_url(url):
     stream.download(output_path=os.path.join(settings.UPLOAD_FOLDER, md5hash), 
                     filename=filename)
                     
+    ft=time.time()
+
+    print(f'pytube took {ft-st} seconds',flush=True)
+
     return str(md5hash), filename
 
 

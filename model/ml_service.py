@@ -8,6 +8,7 @@ import os
 import numpy as np
 import cv2
 from middleware import process_video
+#from time import time as time2
 
 # Connect to Redis and assign to variable `db``
 # Make use of settings.py module to get Redis settings like host, port, etc.
@@ -17,6 +18,7 @@ db = redis.Redis(
 
 assert db.ping, "Unable to connect to redis"
 
+model = keras.models.load_model(settings.PATH_MODEL)
 
 def predict(directory_video, num_scene):
     """
@@ -34,6 +36,7 @@ def predict(directory_video, num_scene):
         Model predicted class as a string and the corresponding confidence
         score as a number.
     """
+    st= time.time()
 
     #return 'CS', 'Static'
     folder=os.path.join(settings.UPLOAD_FOLDER,directory_video,str(num_scene))
@@ -51,8 +54,6 @@ def predict(directory_video, num_scene):
 
     frames = np.expand_dims(frames, axis=0)
 
-    model = keras.models.load_model(settings.PATH_MODEL)
-
     prediction = model.predict(np.array(frames))
 
     index_max_movement=prediction[0].argmax()
@@ -61,6 +62,9 @@ def predict(directory_video, num_scene):
     index_max_scale=prediction[1].argmax()
     class_scale=settings.MODEL_CLASSES_SCALE[index_max_scale]
 
+    ft=time.time()
+
+    print(f'prediction took {ft-st} seconds',flush=True)
 
     return class_scale, class_movement
 
