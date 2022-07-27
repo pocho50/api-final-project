@@ -122,6 +122,7 @@ def predict():
         - "file_name" the video name 
         - "dir" the directory where the video is saved
     """
+    st=time.time()
     # No file received
     if 'file' not in request.files:
         return jsonify({
@@ -162,5 +163,7 @@ def predict():
 
     rpse=utils.check_json(directory,video_name)
     
+    ft=time.time()
+    print(f'all prediction took {ft-st} seconds',flush=True)
     
     return jsonify(rpse)     
