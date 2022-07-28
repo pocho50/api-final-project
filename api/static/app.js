@@ -13,7 +13,7 @@
         errors: false,
         hashFile: false,
         videoExt: 'mp4',
-        delete_cache: false
+        delete_cache: false,
       }
     },
 
@@ -29,7 +29,6 @@
           this.hashFile = false,
           this.url = null,
           this.delete_cache = false
-
         },
 
         handleFile(e) {
@@ -109,6 +108,15 @@
           }
           
         },
+
+        getSeconds(time){
+          const split_time = time.split(':')
+          seconds = parseInt(split_time[2])
+          min = parseInt(split_time[1])
+          hours = parseInt(split_time[0])
+          return seconds + min * 60 + hours * 60 * 60
+
+        }
 
     },
     delimiters: ['[[',']]']

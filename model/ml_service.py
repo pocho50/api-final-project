@@ -122,7 +122,8 @@ def classify_process():
                 'to': scene['to'],
                 'dir': os.path.join(directory_video, str(num_scene)),
                 'scale': scale,
-                'movement': movement
+                'movement': movement,
+                'frames': settings.FRAMES
             }
 
             info_scenes[num_scene] = info_scene
