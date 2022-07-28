@@ -54,8 +54,9 @@ class ScenesProcess:
         self.scenes =  scene_manager.get_scene_list(base_timecode, start_in_scene=True) 
 
         directory_path = os.path.dirname(self.video_path)
-        scene_path=os.path.join(directory_path,'0')
-        if not os.path.exists(scene_path):
+
+        # check if the scenes images are alredy created
+        if len(os.listdir(directory_path)) <= len(self.scenes):
             self.__generate_thumbails_scenes()
 
         list_scenes = []
@@ -100,10 +101,10 @@ class ScenesProcess:
         # create directory scene and images for each scene
         for scene, frames in scene_frame.items():
             # for scenes with less than self.frames_by_scene
-            if len(frames) < self.frames_by_scene:
-                len_frames = len(frames)
+            len_frames = len(frames)
+            if len_frames < self.frames_by_scene:
                 for i in range(len_frames,  self.frames_by_scene):
-                    frames[i] = frames[-1]
+                    frames.append(frames[-1])
 
             os.makedirs(os.path.join(settings.UPLOAD_FOLDER, directory_movie, str(scene)), exist_ok = True)
             for i, frame in enumerate(frames):
