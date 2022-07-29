@@ -167,4 +167,4 @@ def predict():
     ft=time.time()
     print(f'all prediction took {ft-st} seconds',flush=True)
     
-    return jsonify(rpse)     
+    return jsonify(rpse)
