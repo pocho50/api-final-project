@@ -6,6 +6,7 @@ from pytube import YouTube
 import json
 import time
 
+
 def allowed_file(filename):
     """
     Checks if the format for the file received is acceptable. For this
@@ -171,5 +172,3 @@ def check_json(directory, video_name, no_cache):
             rpse = json.loads(json_file)
             
     return rpse
-
-

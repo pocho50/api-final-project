@@ -48,70 +48,66 @@
           }
         },
 
-        async handleUpload(){
-
+        handleUpload(){
           this.video = null
           this.scenes = null
           this.url = null
           let data = new FormData()
           data.append('file', this.file)
           data.append('no_cache', this.delete_cache)
-          this.loading = true
-          const response = await fetch('/predict', {
-            method: 'POST',
-            body: data
-          })
-
-          const jsonData = await response.json()
-
-          this.processData(jsonData)
-              
-          this.loading = false
+          this.makeRequest('/predict', data)
    
         },
 
-        async handleUrlYoutube(){
+        handleUrlYoutube(){
           this.video = null
           this.scenes = null
           let data = new FormData()
           data.append('url', this.url) 
           data.append('no_cache', this.delete_cache)
+          this.makeRequest('/predict_youtube', data)
+        
+        },
+
+        async makeRequest(url, data){
+
           this.loading = true
-          const response = await fetch('/predict_youtube', {
-            method: 'POST',
-            body: data
-          })
+          try {
+            const response = await fetch(url, {
+              method: 'POST',
+              body: data
+            })
 
-          const jsonData = await response.json()
+            const jsonData = await response.json()
 
-          this.processData(jsonData)
+            if (response.ok) {
+              this.processData(jsonData)
+            } else {
+              this.errors = jsonData['error']
+            }
+            
+          } catch(error) {
+               this.errors = error
+          }
 
           this.loading = false
+
         },
 
         processData(jsonData){
-
-          if(jsonData['success']){
-            this.hashFile = jsonData['file_name']
-            this.video = '/static/uploads/' + jsonData['dir'] + '/' + this.hashFile
-            this.videoExt = this.hashFile.split('.').pop();
-            this.scenes = jsonData['scenes']
-            this.errors = false
-            this.url = null
-            this.fileName = null
-            this.$refs.inputFile.value=null
-            return true
-
-          } else {
-            this.errors = jsonData['error']
-            return false
-          }
-          
+          this.hashFile = jsonData['file_name']
+          this.video = '/static/uploads/' + jsonData['dir'] + '/' + this.hashFile
+          this.videoExt = this.hashFile.split('.').pop();
+          this.scenes = jsonData['scenes']
+          this.errors = false
+          this.url = null
+          this.fileName = null
+          this.$refs.inputFile.value=null
         },
 
         getSeconds(time){
           const split_time = time.split(':')
-          seconds = parseInt(split_time[2])
+          seconds = parseFloat(split_time[2])
           min = parseInt(split_time[1])
           hours = parseInt(split_time[0])
           return seconds + min * 60 + hours * 60 * 60

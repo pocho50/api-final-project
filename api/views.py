@@ -1,7 +1,6 @@
 import utils
 import settings
 import os
-import json
 import time
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for, jsonify
@@ -53,32 +52,17 @@ def predict_youtube():
     st=time.time()
     # No url received
     if 'url' not in request.form:
-        return jsonify({
-            "success": False, 
-            "error": settings.ERROR_FILE_NOT_IN_REQUEST,
-            "valid": False,
-            "file_name": False,
-        }), 400
+        return jsonify({"error": settings.ERROR_FILE_NOT_IN_REQUEST}), 400
 
     youtube_url = request.form.get('url')
 
     if not (utils.allowed_url(youtube_url)):
-        return jsonify({
-            "success": False,
-            "error": settings.ERROR_ALLOWED_URL_YOUTUBE,
-            "valid": False,
-            "file_name": False,
-        }), 400
+        return jsonify({"error": settings.ERROR_ALLOWED_URL_YOUTUBE}), 400
 
     try:
         directory, video_name = utils.process_youtube_url(youtube_url)
     except BaseException as error:
-        return jsonify({
-            "success": False, 
-            "error": str(error),
-            "valid": False,
-            "file_name": False,
-        }), 400
+        return jsonify({"error": str(error)}), 400
 
     # get scene prediction
     no_cache = request.form.get('no_cache', False)
@@ -126,30 +110,15 @@ def predict():
     st=time.time()
     # No file received
     if 'file' not in request.files:
-        return jsonify({
-            "success": False, 
-            "error": settings.ERROR_FILE_NOT_IN_REQUEST,
-            "valid": False,
-            "file_name": False,
-        }), 400
+        return jsonify({"error": settings.ERROR_FILE_NOT_IN_REQUEST}), 400
 
     # File received but no filename is provided
     file = request.files['file']
     if file.filename == "":
-        return jsonify({
-            "success": False, 
-            "error": settings.ERROR_NO_VIDEO_PROVIDED,
-            "valid": False,
-            "file_name": False,
-        }), 400
+        return jsonify({"error": settings.ERROR_NO_VIDEO_PROVIDED}), 400
 
     if not (file and utils.allowed_file(file.filename)):
-        return jsonify({
-            "success": False, 
-            "error": settings.ERROR_ALLOWED_VIDEO,
-            "valid": False,
-            "file_name": False,
-        }), 400
+        return jsonify({"error": settings.ERROR_ALLOWED_VIDEO}), 400
         
     directory, video_name = utils.directory_file_hash(file)
 

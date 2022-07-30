@@ -17,10 +17,6 @@ class TestIntegration(TestCase):
         )
         self.assertEqual(response.status_code, 400)
         data = json.loads(response.get_data(as_text=True))
-        self.assertEqual(len(data.keys()), 4)
-        self.assertEqual(data["success"], False)
-        self.assertEqual(data["valid"], False)
-        self.assertEqual(data["file_name"], False)
         self.assertEqual(data["error"], settings.ERROR_FILE_NOT_IN_REQUEST)
 
 
