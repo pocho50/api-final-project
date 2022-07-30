@@ -4,16 +4,14 @@ import requests
 
 
 class TestIntegration(unittest.TestCase):
-    #def test_index(self):
-    #    response = requests.request("GET", "http://0.0.0.0/",)
-    #    self.assertEqual(response.status_code, 200)
-
-    #    response = requests.request("POST", "http://0.0.0.0/",)
-    #    self.assertEqual(response.status_code, 200)
+    def test_index(self):
+        response = requests.request("GET", "http://0.0.0.0/",)
+        self.assertEqual(response.status_code, 200)
 
     def test_predict(self):
+        video_file = open("tests/e3e0aafc5c1dab9f7743e63dcf4c8a83.mp4", "rb")
         files = [
-            ("file", ("e3e0aafc5c1dab9f7743e63dcf4c8a83.mp4", open("tests/e3e0aafc5c1dab9f7743e63dcf4c8a83.mp4", "rb"), "video/mp4"))
+            ("file", ("e3e0aafc5c1dab9f7743e63dcf4c8a83.mp4", video_file, "video/mp4"))
         ]
         headers = {}
         payload = {}
@@ -24,6 +22,7 @@ class TestIntegration(unittest.TestCase):
             data=payload,
             files=files,
         )
+        video_file.close()
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["success"], True)

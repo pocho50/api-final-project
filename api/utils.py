@@ -39,9 +39,7 @@ def allowed_url(url):
     bool
         True if the url is valid, False otherwise.
     """    
-    youtube_regex = (r'(https?://)?(www\.)?'
-                    '(youtube|youtu|youtube-nocookie)\.(com|be)/'
-                    '(watch\?v=|embed/|v/|.+\?v=)?([^&=%\?]{11})')  
+    youtube_regex = (r'^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$')  
     
     youtube_regex_match = re.match(youtube_regex, url)
 
@@ -51,7 +49,7 @@ def allowed_url(url):
     return False
 
 
-def directory_file_hash(file):
+def directory_file_hash(file, buffer=False):
     """
     Returns a new filename based on the file content using MD5 hashing.
     It uses hashlib.md5() function from Python standard library to get
@@ -67,12 +65,17 @@ def directory_file_hash(file):
         A tuple having the directory of the file and the file name.
     """
 
-    split_file = os.path.splitext(file.filename)
+    if(not buffer):
+        split_file = os.path.splitext(file.filename)
+        file_ext = str(split_file[1])
+    else:
+        file_ext = '.mp4'
+
     data = file.read()
     md5hash = hashlib.md5(data).hexdigest()
     file.seek(0)
 
-    return str(md5hash), str(md5hash) + str(split_file[1])
+    return str(md5hash), str(md5hash) + file_ext
 
 def process_youtube_url(url):
     """
@@ -104,26 +107,24 @@ def process_youtube_url(url):
     stream.stream_to_buffer(buf)
     buf.seek(0)
     # read the file
-    data = buf.read()
+    #data = buf.read()
     # get the md5
-    md5hash = hashlib.md5(data).hexdigest()
-    buf.seek(0)
-
-    # generate the filename
-    filename = str(md5hash) + '.mp4'
+    directory, filename = directory_file_hash(buf, buffer=True) 
 
     # create directory for the file
-    os.makedirs(os.path.join(settings.UPLOAD_FOLDER, md5hash), exist_ok = True)
+    os.makedirs(os.path.join(settings.UPLOAD_FOLDER, directory), exist_ok = True)
 
     # save the file in the directory
-    stream.download(output_path=os.path.join(settings.UPLOAD_FOLDER, md5hash), 
+    stream.download(output_path=os.path.join(settings.UPLOAD_FOLDER, directory), 
                     filename=filename)
+
+    print(os.path.join(settings.UPLOAD_FOLDER, directory), flush=True)
                     
     ft=time.time()
 
     print(f'pytube took {ft-st} seconds',flush=True)
 
-    return str(md5hash), filename
+    return directory, filename
 
 
 def get_prediction(video_name):

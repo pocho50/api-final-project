@@ -1,11 +1,11 @@
 import os
 from unittest import TestCase
-from unittest.mock import Mock
-import settings
+from unittest.mock import patch
 
 from werkzeug.datastructures import FileStorage
 
 import utils
+from app import app
 
 
 class TestUtils(TestCase):
@@ -40,4 +40,18 @@ class TestUtils(TestCase):
 
         self.assertTrue(utils.allowed_url(url))
         self.assertFalse(utils.allowed_url('blabla'))
+
+    @patch('settings.UPLOAD_FOLDER')
+    def test_process_youtube_url(self, mock):
+        directory_valid = '01052cd8a3965f0a01fa8caaf91c5c72'
+        filename_valid = '01052cd8a3965f0a01fa8caaf91c5c72.mp4'
+        mock.return_value = 'tmp/'
+        url_youtube = 'https://www.youtube.com/watch?v=z2T-Rh838GA'
+        directory, filename = utils.process_youtube_url(url_youtube)
+
+        self.assertEqual(filename_valid, filename)
+        self.assertEqual(directory_valid, directory)
+        self.assertTrue(os.path.exists(os.path.join(mock, directory, filename_valid)))
+
+
         
