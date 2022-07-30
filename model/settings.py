@@ -1,4 +1,5 @@
 import os
+import utils
 
 # We will store images uploaded by the user on this folder
 UPLOAD_FOLDER = "uploads/"
@@ -18,10 +19,10 @@ REDIS_IP = "redis"
 # interval between requests to our redis queue
 SERVER_SLEEP = 0.05
 
-SHAPE = (224,224)
-MODEL_CLASSES_MOVEMENT = ['Motion', 'Pull', 'Push', 'Static']
-MODEL_CLASSES_SCALE = ['CS', 'ECS', 'FS', 'LS', 'MS']
-PATH_MODEL_MOVEMENT = './weight/model.05-0.9174.h5'
-PATH_MODEL_SCALE = './weight/model.04-0.5498.h5'
-PATH_MODEL = './weight/model.06-1.5956.h5'
-FRAMES = 8
+models_settings = utils.load_config('config_model.yml')
+
+SHAPE = models_settings['shape']
+MODEL_CLASSES_MOVEMENT = models_settings['classes_movement']
+MODEL_CLASSES_SCALE = models_settings['classes_scale']
+PATH_MODEL =  models_settings['path_model']
+FRAMES = models_settings['frames']
