@@ -115,11 +115,11 @@ def process_youtube_url(url):
     # create directory for the file
     os.makedirs(os.path.join(settings.UPLOAD_FOLDER, directory), exist_ok = True)
 
-    # save the file in the directory
-    stream.download(output_path=os.path.join(settings.UPLOAD_FOLDER, directory), 
-                    filename=filename)
+    if not os.path.exists(os.path.join(settings.UPLOAD_FOLDER, directory,filename)):
+        # save the file in the directory
+        stream.download(output_path=os.path.join(settings.UPLOAD_FOLDER, directory), 
+                        filename=filename)
 
-    print(os.path.join(settings.UPLOAD_FOLDER, directory), flush=True)
                     
     ft=time.time()
 

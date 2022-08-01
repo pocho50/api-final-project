@@ -36,7 +36,7 @@ def predict(directory_video, num_scene):
         Model predicted class as a string and the corresponding confidence
         score as a number.
     """
-    st= time.time()
+    
 
     #return 'CS', 'Static'
     folder=os.path.join(settings.UPLOAD_FOLDER,directory_video,str(num_scene))
@@ -62,9 +62,9 @@ def predict(directory_video, num_scene):
     index_max_scale=prediction[1].argmax()
     class_scale=settings.MODEL_CLASSES_SCALE[index_max_scale]
 
-    ft=time.time()
+    
 
-    print(f'prediction took {ft-st} seconds',flush=True)
+    
 
     return class_scale, class_movement
 
@@ -116,7 +116,10 @@ def classify_process():
         info_scenes = {}
         for num_scene, scene in enumerate(scenes):
             # prectic scale and movement
+            st= time.time()
             scale, movement = predict(directory_video, num_scene)
+            ft=time.time()
+            print(f'prediction scene {num_scene + 1 } took {ft-st} seconds',flush=True)
             info_scene  = {
                 'from': scene['from'],
                 'to': scene['to'],
