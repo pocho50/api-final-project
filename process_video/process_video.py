@@ -12,16 +12,17 @@ db = redis.Redis(
 
 assert db.ping, "Unable to connect to redis"
 
+
 def process_video():
     while True:
-        
+
         _, job_data_json = db.brpop(settings.REDIS_VIDEO_QUEUE)
 
-        print('The video is ready to be process by video scene',flush=True)
+        print("The video is ready to be process by video scene", flush=True)
         job_data = json.loads(job_data_json)
 
-        video_path = job_data['video_path']
-        frames_by_scene = job_data['frames']
+        video_path = job_data["video_path"]
+        frames_by_scene = job_data["frames"]
 
         secenes_process = ScenesProcess(video_path, frames_by_scene=frames_by_scene)
         scenes = secenes_process.process()
@@ -30,6 +31,7 @@ def process_video():
 
         # sleep for a bit at the end
         time.sleep(settings.SERVER_SLEEP)
+
 
 if __name__ == "__main__":
     # Now launch process

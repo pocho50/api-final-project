@@ -21,7 +21,6 @@ class TestUtils(TestCase):
         self.assertTrue(utils.allowed_file("cat.ogg"))
         self.assertTrue(utils.allowed_file("cat.webm"))
 
-
     def test_get_file_hash(self):
         filename = "tests/movie.mp4"
         md5_filename = "deab000c5012b3e9dafe8262046a556c.mp4"
@@ -36,22 +35,19 @@ class TestUtils(TestCase):
             self.assertTrue(file.read() != b"")
 
     def test_valid_url_youtube(self):
-        url = 'https://www.youtube.com/watch?v=qXYb8R3_B0k'
+        url = "https://www.youtube.com/watch?v=qXYb8R3_B0k"
 
         self.assertTrue(utils.allowed_url(url))
-        self.assertFalse(utils.allowed_url('blabla'))
+        self.assertFalse(utils.allowed_url("blabla"))
 
-    @patch('settings.UPLOAD_FOLDER')
+    @patch("settings.UPLOAD_FOLDER")
     def test_process_youtube_url(self, mock):
-        directory_valid = '01052cd8a3965f0a01fa8caaf91c5c72'
-        filename_valid = '01052cd8a3965f0a01fa8caaf91c5c72.mp4'
-        mock.return_value = 'tmp/'
-        url_youtube = 'https://www.youtube.com/watch?v=z2T-Rh838GA'
+        directory_valid = "01052cd8a3965f0a01fa8caaf91c5c72"
+        filename_valid = "01052cd8a3965f0a01fa8caaf91c5c72.mp4"
+        mock.return_value = "tmp/"
+        url_youtube = "https://www.youtube.com/watch?v=z2T-Rh838GA"
         directory, filename = utils.process_youtube_url(url_youtube)
 
         self.assertEqual(filename_valid, filename)
         self.assertEqual(directory_valid, directory)
         self.assertTrue(os.path.exists(os.path.join(mock, directory, filename_valid)))
-
-
-        

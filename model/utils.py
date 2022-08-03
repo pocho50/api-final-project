@@ -1,5 +1,6 @@
 import yaml
 
+
 def validate_config(config):
     """
     checks the model settings
@@ -17,7 +18,7 @@ def validate_config(config):
 
     if "classes_scale" not in config:
         raise ValueError("Missing the scale classes")
-    
+
     if "shape" not in config:
         raise ValueError("Missing the shape")
 

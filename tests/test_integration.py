@@ -5,7 +5,10 @@ import requests
 
 class TestIntegration(unittest.TestCase):
     def test_index(self):
-        response = requests.request("GET", "http://0.0.0.0/",)
+        response = requests.request(
+            "GET",
+            "http://0.0.0.0/",
+        )
         self.assertEqual(response.status_code, 200)
 
     def test_predict(self):
@@ -26,10 +29,9 @@ class TestIntegration(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertEqual(data["success"], True)
-        self.assertEqual(data["scenes"]['0']["scale"], "LS")
-        self.assertEqual(data['scenes']['0']["movement"], 'Motion')
+        self.assertEqual(data["scenes"]["0"]["scale"], "LS")
+        self.assertEqual(data["scenes"]["0"]["movement"], "Motion")
 
 
 if __name__ == "__main__":
     unittest.main()
-

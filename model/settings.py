@@ -19,10 +19,10 @@ REDIS_IP = "redis"
 # interval between requests to our redis queue
 SERVER_SLEEP = 0.05
 
-models_settings = utils.load_config('config_model.yml')
+models_settings = utils.load_config("config_model.yml")
 
-SHAPE = models_settings['shape']
-MODEL_CLASSES_MOVEMENT = models_settings['classes_movement']
-MODEL_CLASSES_SCALE = models_settings['classes_scale']
-PATH_MODEL =  models_settings['path_model']
-FRAMES = models_settings['frames']
+SHAPE = models_settings["shape"]
+MODEL_CLASSES_MOVEMENT = models_settings["classes_movement"]
+MODEL_CLASSES_SCALE = models_settings["classes_scale"]
+PATH_MODEL = models_settings["path_model"]
+FRAMES = models_settings["frames"]

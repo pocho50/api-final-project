@@ -42,8 +42,7 @@ def process_video(video_path):
     #    "video_path": str,
     # }
 
-
-    job_data = {"id": job_id, "video_path": video_path, 'frames': settings.FRAMES}
+    job_data = {"id": job_id, "video_path": video_path, "frames": settings.FRAMES}
 
     # Send the job to the process video service using Redis
 
